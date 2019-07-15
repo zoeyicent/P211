@@ -1,0 +1,25 @@
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MI1MAS';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('MI1MAS', '1', '0', 'admin', '2019-07-15 02:41:13', 'admin', '2019-07-15 02:41:13', '0', 'admin', '2019-07-15 02:41:13', '');
+insert into `MI1MAS` (`M1M1NOIY`, `M1M1NO`, `M1NAME`, `M1DPFG`, `M1REMK`, `M1COMPIY`, `M1DLFG`, `M1RGID`, `M1RGDT`, `M1CHID`, `M1CHDT`, `M1CHNO`, `M1CSID`, `M1CSDT`, `M1CSNO`) values (1, 'NA', 'NA', '1', '', 1, '0', 'admin', '2019-07-15 02:41:13', 'admin', '2019-07-15 02:41:13', '0', 'admin', '2019-07-15 02:41:13', '20190715_024113_?)60605^*_');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MI2MAS';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('MI2MAS', '1', '0', 'admin', '2019-07-15 02:41:34', 'admin', '2019-07-15 02:41:34', '0', 'admin', '2019-07-15 02:41:34', '');
+insert into `MI2MAS` (`M2M2NOIY`, `M2M1NOIY`, `M2M2NO`, `M2NAME`, `M2DPFG`, `M2REMK`, `M2COMPIY`, `M2DLFG`, `M2RGID`, `M2RGDT`, `M2CHID`, `M2CHDT`, `M2CHNO`, `M2CSID`, `M2CSDT`, `M2CSNO`) values (1, 1, 'NA', 'NA', '1', '', 1, '0', 'admin', '2019-07-15 02:41:34', 'admin', '2019-07-15 02:41:34', '0', 'admin', '2019-07-15 02:41:34', '20190715_024134_}->~(@($(4');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'UNTMAS';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('UNTMAS', '1', '0', 'admin', '2019-07-15 02:41:50', 'admin', '2019-07-15 02:41:50', '0', 'admin', '2019-07-15 02:41:50', '');
+insert into `UNTMAS` (`UMUNMSIY`, `UMUNMS`, `UMNAME`, `UMDPFG`, `UMREMK`, `UMCOMPIY`, `UMDLFG`, `UMRGID`, `UMRGDT`, `UMCHID`, `UMCHDT`, `UMCHNO`, `UMCSID`, `UMCSDT`, `UMCSNO`) values (1, 'PCS', 'PCS', '1', '', 1, '0', 'admin', '2019-07-15 02:41:50', 'admin', '2019-07-15 02:41:50', '0', 'admin', '2019-07-15 02:41:50', '20190715_024150_~3^3-(88)$');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MITMAS';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('MITMAS', '1', '0', 'admin', '2019-07-15 02:42:18', 'admin', '2019-07-15 02:42:18', '0', 'admin', '2019-07-15 02:42:18', '');
+insert into `MITMAS` (`MMITNOIY`, `MMITNO`, `MMNAME`, `MMDESC`, `MMUNMSIY`, `MMM2NOIY`, `MMHARG`, `MMQTYS`, `MMDPFG`, `MMREMK`, `MMCOMPIY`, `MMDLFG`, `MMRGID`, `MMRGDT`, `MMCHID`, `MMCHDT`, `MMCHNO`, `MMCSID`, `MMCSDT`, `MMCSNO`) values (1, 'BAR001', 'BARANG 001 NAMA', 'BARANG 001 DESKRIPSI', 1, 1, 10000, '0', '1', '', 1, '0', 'admin', '2019-07-15 02:42:18', 'admin', '2019-07-15 02:42:18', '0', 'admin', '2019-07-15 02:42:18', '20190715_024218_3*<933_1`9');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MITMAS';
+update `SYSNOR` set `SNTABL` = 'MITMAS', `SNNOUR` = 2, `SNDLFG` = '0', `SNRGID` = 'admin', `SNRGDT` = '2019-07-15 02:42:38', `SNCHID` = 'admin', `SNCHDT` = '2019-07-15 02:42:38', `SNCHNO` = '0', `SNCSID` = 'admin', `SNCSDT` = '2019-07-15 02:42:38', `SNCSNO` = '' where `SNTABL` = 'MITMAS';
+insert into `MITMAS` (`MMITNOIY`, `MMITNO`, `MMNAME`, `MMDESC`, `MMUNMSIY`, `MMM2NOIY`, `MMHARG`, `MMQTYS`, `MMDPFG`, `MMREMK`, `MMCOMPIY`, `MMDLFG`, `MMRGID`, `MMRGDT`, `MMCHID`, `MMCHDT`, `MMCHNO`, `MMCSID`, `MMCSDT`, `MMCSNO`) values (2, 'BAR002', 'BARANG 002 NAMA', 'BARANG 002 DESKRIPSI', 1, 1, 10000, '0', '1', '', 1, '0', 'admin', '2019-07-15 02:42:38', 'admin', '2019-07-15 02:42:38', '0', 'admin', '2019-07-15 02:42:38', '20190715_024238_117^|`<}6-');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MBPMAS';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('MBPMAS', '1', '0', 'admin', '2019-07-15 02:58:54', 'admin', '2019-07-15 02:58:54', '0', 'admin', '2019-07-15 02:58:54', '');
+insert into `MBPMAS` (`BPBPNOIY`, `BPBPNO`, `BPNAME`, `BPMAIL`, `BPCPER`, `BPSUPF`, `BPCUSF`, `BPDPFG`, `BPREMK`, `BPCOMPIY`, `BPDLFG`, `BPRGID`, `BPRGDT`, `BPCHID`, `BPCHDT`, `BPCHNO`, `BPCSID`, `BPCSDT`, `BPCSNO`) values (1, 'WIL001', 'WILIANTO', 'w.c@yahoo.com', 'aliang', 1, 1, '1', '', 1, '0', 'admin', '2019-07-15 02:58:54', 'admin', '2019-07-15 02:58:54', '0', 'admin', '2019-07-15 02:58:54', '20190715_025854_$9?_8:[2`!');
+
