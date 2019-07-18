@@ -17,6 +17,7 @@ class CreateTRSPENJUALANTable extends weMigrations
             $table->integer('SHCOMPIY')->nullable(false)->comment('System Company IY');
             $table->integer('SHSHNOIY')->nullable(false)->comment('Sales HEAD IY');
             $table->char('SHSHNO',20)->nullable(false)->comment('Transaction No');
+            $table->char('SHNOTA',50)->nullable(true)->comment('Nota No');
             $table->char('SHDATE',8)->nullable(true)->comment('Transaction Date');
             $table->char('SHTYPE',20)->nullable(true)->comment('Transaction Type');
             $table->integer('SHBPNOIY')->nullable(false)->comment('Bisnis Partner IY');

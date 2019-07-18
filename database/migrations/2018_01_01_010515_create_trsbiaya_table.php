@@ -17,6 +17,8 @@ class CreateTRSBIAYATable extends weMigrations
             $table->integer('BHCOMPIY')->nullable(false)->comment('System Company IY');
             $table->integer('BHBHNOIY')->nullable(false)->comment('Biaya HEAD IY');
             $table->char('BHBHNO',20)->nullable(false)->comment('Transaction No');
+            $table->char('BHNOTA',50)->nullable(true)->comment('Nota No');
+            $table->longText('BHDESC')->nullable(true)->comment('Deksripsi Biaya');
             $table->char('BHDATE',8)->nullable(true)->comment('Transaction Date');
             $table->decimal('BHTOTL',24,10)->nullable(false)->comment('Total Amount');
             

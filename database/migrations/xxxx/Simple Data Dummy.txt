@@ -23,3 +23,31 @@ select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'MBPMAS';
 insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('MBPMAS', '1', '0', 'admin', '2019-07-15 02:58:54', 'admin', '2019-07-15 02:58:54', '0', 'admin', '2019-07-15 02:58:54', '');
 insert into `MBPMAS` (`BPBPNOIY`, `BPBPNO`, `BPNAME`, `BPMAIL`, `BPCPER`, `BPSUPF`, `BPCUSF`, `BPDPFG`, `BPREMK`, `BPCOMPIY`, `BPDLFG`, `BPRGID`, `BPRGDT`, `BPCHID`, `BPCHDT`, `BPCHNO`, `BPCSID`, `BPCSDT`, `BPCSNO`) values (1, 'WIL001', 'WILIANTO', 'w.c@yahoo.com', 'aliang', 1, 1, '1', '', 1, '0', 'admin', '2019-07-15 02:58:54', 'admin', '2019-07-15 02:58:54', '0', 'admin', '2019-07-15 02:58:54', '20190715_025854_$9?_8:[2`!');
 
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select max(`PHPHNOIY`) as aggregate from `PHHEAD`;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'PHHEAD';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('PHHEAD', '1', '0', 'admin', '2019-07-18 07:01:59', 'admin', '2019-07-18 07:01:59', '0', 'admin', '2019-07-18 07:01:59', '');
+insert into `PHHEAD` (`PHPHNOIY`, `PHPHNO`, `PHDATE`, `PHTYPE`, `PHBPNOIY`, `PHADDR`, `PHCITY`, `PHTELP`, `PHCPER`, `PHSUBT`, `PHEXCT`, `PHTOTL`, `PHREMK`, `PHCOMPIY`, `PHDLFG`, `PHRGID`, `PHRGDT`, `PHCHID`, `PHCHDT`, `PHCHNO`, `PHCSID`, `PHCSDT`, `PHCSNO`) values (1, 'PCH/000001', '20190701', 'T', 1, '1', '2', '3', '4', 20000, '0', 20000, '', 1, '0', 'admin', '2019-07-18 07:01:59', 'admin', '2019-07-18 07:01:59', '0', 'admin', '2019-07-18 07:01:59', '20190718_070159_4;^6};<*->');
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'PHLINE';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('PHLINE', '1', '0', 'admin', '2019-07-18 07:01:59', 'admin', '2019-07-18 07:01:59', '0', 'admin', '2019-07-18 07:01:59', '');
+insert into `PHLINE` (`PLPLNOIY`, `PLPHNOIY`, `PLITNOIY`, `PLQTYS`, `PLHARG`, `PLTOTL`, `PLREMK`, `PLDESC`, `PLPLNO`, `PLDLFG`, `PLRGID`, `PLRGDT`, `PLCHID`, `PLCHDT`, `PLCHNO`, `PLCSID`, `PLCSDT`, `PLCSNO`) values (1, 1, 1, 10, 1000, 10000, '', '', 1, '0', 'admin', '2019-07-18 07:01:59', 'admin', '2019-07-18 07:01:59', '0', 'admin', '2019-07-18 07:01:59', '20190718_070159_4;^6};<*->');
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'PHLINE';
+update `SYSNOR` set `SNTABL` = 'PHLINE', `SNNOUR` = 2, `SNDLFG` = '0', `SNRGID` = 'admin', `SNRGDT` = '2019-07-18 07:01:59', `SNCHID` = 'admin', `SNCHDT` = '2019-07-18 07:01:59', `SNCHNO` = '0', `SNCSID` = 'admin', `SNCSDT` = '2019-07-18 07:01:59', `SNCSNO` = '' where `SNTABL` = 'PHLINE';
+insert into `PHLINE` (`PLPLNOIY`, `PLPHNOIY`, `PLITNOIY`, `PLQTYS`, `PLHARG`, `PLTOTL`, `PLREMK`, `PLDESC`, `PLPLNO`, `PLDLFG`, `PLRGID`, `PLRGDT`, `PLCHID`, `PLCHDT`, `PLCHNO`, `PLCSID`, `PLCSDT`, `PLCSNO`) values (2, 1, 2, 10, 1000, 10000, '', '', 2, '0', 'admin', '2019-07-18 07:01:59', 'admin', '2019-07-18 07:01:59', '0', 'admin', '2019-07-18 07:01:59', '20190718_070159_4;^6};<*->');
+call StpProsesMittraByTransaksi('admin','1','PCH','1','');
+
+
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+select max(`SHSHNOIY`) as aggregate from `SHHEAD`;
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'SHHEAD';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('SHHEAD', '1', '0', 'admin', '2019-07-18 07:03:02', 'admin', '2019-07-18 07:03:02', '0', 'admin', '2019-07-18 07:03:02', '');
+insert into `SHHEAD` (`SHSHNOIY`, `SHSHNO`, `SHDATE`, `SHTYPE`, `SHBPNOIY`, `SHADDR`, `SHCITY`, `SHTELP`, `SHCPER`, `SHSUBT`, `SHEXCT`, `SHTOTL`, `SHREMK`, `SHCOMPIY`, `SHDLFG`, `SHRGID`, `SHRGDT`, `SHCHID`, `SHCHDT`, `SHCHNO`, `SHCSID`, `SHCSDT`, `SHCSNO`) values (1, 'SLS/000001', '20190704', 'T', 1, '1', '2', '3', '4', 15000, '0', '150000', '', 1, '0', 'admin', '2019-07-18 07:03:02', 'admin', '2019-07-18 07:03:02', '0', 'admin', '2019-07-18 07:03:02', '20190718_070302_@2!$;}|-]]');
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'SHLINE';
+insert into `SYSNOR` (`SNTABL`, `SNNOUR`, `SNDLFG`, `SNRGID`, `SNRGDT`, `SNCHID`, `SNCHDT`, `SNCHNO`, `SNCSID`, `SNCSDT`, `SNCSNO`) values ('SHLINE', '1', '0', 'admin', '2019-07-18 07:03:02', 'admin', '2019-07-18 07:03:02', '0', 'admin', '2019-07-18 07:03:02', '');
+insert into `SHLINE` (`SLSLNOIY`, `SLSHNOIY`, `SLITNOIY`, `SLQTYS`, `SLHARG`, `SLTOTL`, `SLREMK`, `SLDESC`, `SLSLNO`, `SLDLFG`, `SLRGID`, `SLRGDT`, `SLCHID`, `SLCHDT`, `SLCHNO`, `SLCSID`, `SLCSDT`, `SLCSNO`) values (1, 1, 1, 5, 1500, 7500, '', '', 1, '0', 'admin', '2019-07-18 07:03:02', 'admin', '2019-07-18 07:03:02', '0', 'admin', '2019-07-18 07:03:02', '20190718_070302_@2!$;}|-]]');
+select `SNTABL`, `SNNOUR` from `SYSNOR` where `SNTABL` = 'SHLINE';
+update `SYSNOR` set `SNTABL` = 'SHLINE', `SNNOUR` = 2, `SNDLFG` = '0', `SNRGID` = 'admin', `SNRGDT` = '2019-07-18 07:03:02', `SNCHID` = 'admin', `SNCHDT` = '2019-07-18 07:03:02', `SNCHNO` = '0', `SNCSID` = 'admin', `SNCSDT` = '2019-07-18 07:03:02', `SNCSNO` = '' where `SNTABL` = 'SHLINE';
+insert into `SHLINE` (`SLSLNOIY`, `SLSHNOIY`, `SLITNOIY`, `SLQTYS`, `SLHARG`, `SLTOTL`, `SLREMK`, `SLDESC`, `SLSLNO`, `SLDLFG`, `SLRGID`, `SLRGDT`, `SLCHID`, `SLCHDT`, `SLCHNO`, `SLCSID`, `SLCSDT`, `SLCSNO`) values (2, 1, 2, 5, 1500, 7500, '', '', 2, '0', 'admin', '2019-07-18 07:03:02', 'admin', '2019-07-18 07:03:02', '0', 'admin', '2019-07-18 07:03:02', '20190718_070302_@2!$;}|-]]');
+select `SCCOMPIY` from `SYSCOM` where `SCCOMP` = 'demo' limit 1;
+call StpProsesMittraByTransaksi('admin','1','SLS','1','')
+

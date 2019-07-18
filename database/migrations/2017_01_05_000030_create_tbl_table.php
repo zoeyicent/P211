@@ -87,7 +87,7 @@ class CreateTBLTable extends weMigrations
             $table->increments('TRNOMRIY')->nullable(false)->comment('NoUrut IY');
             $table->char('TRDCNO',50)->nullable(true)->comment('Document No');
             $table->char('TRSWNO',50)->nullable(true)->comment('Show No');
-            $table->integer('TRRNNO')->nullable(true)->comment('Running No');
+            $table->integer('TRRNNO')->nullable(false)->comment('Running No');
             
             $this->AutoCreateDefaultColumns('TR', $table);
 

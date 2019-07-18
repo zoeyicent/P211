@@ -734,7 +734,35 @@
         }
         return $NoIY;    
     }
-    
+
+    function fnTBLTRN($CompIY, $UserName, $DCNO, $SWNO, $Lgth) {
+        $NoIY = 1;
+        $NoTRS = "";
+        $TBLNOUR = DB::table("TBLTRN")
+                        ->Select(['TRDCNO' , 'TRRNNO'])
+                        ->where('TRDCNO','=',$DCNO)
+                        // ->where('TRDCNO','=','TBLMNU')
+                        ->get();
+        if (count($TBLNOUR)) {
+            // var_dump($TBLNOUR[0]);
+            $NoIY = ($TBLNOUR[0]->TRRNNO+1);
+            $NoTRS = $SWNO.substr(str_repeat("0",$Lgth).$NoIY,-1*$Lgth);
+            $TBLTRN = array("TRCOMPIY"=>$CompIY,"TRDCNO"=>$DCNO,"TRRNNO"=>$NoIY,"TRSWNO"=>$NoTRS);
+            $FinalTBLTRN = fnGetSintaxCRUD ($UserName, $TBLTRN, '1', "TR", ['TRSWNO','TRRNNO'], "" );
+            DB::table('TBLTRN')
+                ->where('TRCOMPIY','=',$CompIY)
+                ->where('TRDCNO','=',$DCNO)
+                ->update($FinalTBLTRN);   
+        } else {
+            $NoTRS = $SWNO.substr(str_repeat("0",$Lgth)."1",-1*$Lgth);
+            $TBLTRN = array("TRCOMPIY"=>$CompIY,"TRDCNO"=>$DCNO,"TRRNNO"=>"1","TRSWNO"=>$NoTRS);
+            $FinalTBLTRN = fnGetSintaxCRUD ($UserName, $TBLTRN, '1', "TR", ['TRCOMPIY','TRDCNO','TRSWNO','TRRNNO'], "" );
+            DB::table('TBLTRN')
+                ->insert($FinalTBLTRN);   
+        }
+        return $NoTRS;    
+    }
+
     function fnSetExecuteQuery ($UserName, $cm, $Params = "") {
         $HasilExec = null;
 

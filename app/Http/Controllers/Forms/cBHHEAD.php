@@ -19,6 +19,8 @@ class cBHHEAD extends cWeController {
         fnCrtColGrid($this->GridObj, "act", 1, 0, '', 'ACTION', 'Action', 50);
         fnCrtColGrid($this->GridObj, "hdn", 1, 1, '', 'BHBHNOIY', 'IY', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BHBHNO', 'No Transaksi', 100);
+        fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BHNOTA', 'No Referensi', 100);
+        fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BHDESC', 'No Referensi', 100);
         fnCrtColGrid($this->GridObj, "dtp", 1, 1, '', 'BHDATE', 'Tanggal', 100);
         fnCrtColGrid($this->GridObj, "num", 1, 1, '', 'BHTOTL', 'Total Keseluruhan', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BHREMK', 'Keterangan', 100);
@@ -58,9 +60,11 @@ class cBHHEAD extends cWeController {
 
         fnCrtObjTxt($this->FormObj, 0, "FF", "3", "Panel1", "BHBHNOIY", "IY", "", false);
         fnCrtObjTxt($this->FormObj, 1, "FF", "3", "Panel1", "BHBHNO", "No Transaksi", "", false);
+        fnCrtObjTxt($this->FormObj, 1, "FF", "0", "Panel1", "BHNOTA", "No Referensi", "", false, "0", "30");   
         fnCrtObjDtp($this->FormObj, 1, "FF", "2", "Panel1", "BHDATE", "Tanggal Transaksi", "", true);         
         fnCrtObjNum($this->FormObj, 1, "FF", "3", "Panel1", "BHTOTL", "Total Keseluruhan", "", false, 0, "","IDR", 1);
         fnCrtObjRmk($this->FormObj, 1, "FF", "0", "Panel1", "BHREMK", "Keterangan", "", false, 100);
+        fnCrtObjRmk($this->FormObj, 1, "FF", "0", "Panel1", "BHDESC", "Dekripsi", "", false, 100);
 
         fnCrtObjGrd($this->FormObj, 1, "XX", "0", "Panel5", "BHLINE", "Detail Biaya", true
                             , "AEDL", "BHHEAD", "LoadBHLINE");
@@ -198,13 +202,17 @@ class cBHHEAD extends cWeController {
         switch ($request->Mode) {
             case "1":
                 $NO = DB::Table('BHHEAD')->max('BHBHNOIY');
-                $fBHHEAD['BHBHNO'] = 'CST/'.substr('0000000'.($NO+1),-6);
+                // $fBHHEAD['BHBHNO'] = 'CST/'.substr('0000000'.($NO+1),-6);
                 // $fBHHEAD['BHBHNO'] = 'SALES/000025';
+
+                $fBHHEAD['BHBHNO'] = fnTBLTRN($fBHHEAD['BHCOMPIY'], $UserName, 
+                                        "BYA-".substr($fBHHEAD['BHDATE'],0,6),
+                                        "BYA/".substr($fBHHEAD['BHDATE'],0,6)."/", 6);
 
                 $fBHHEAD['BHBHNOIY'] = fnSYSNOR('BHHEAD', $UserName);
                 $FinalField = fnGetSintaxCRUD ($UserName, $fBHHEAD, 
                     '1', "BH", 
-                    ['BHCOMPIY','BHBHNOIY','BHBHNO','BHDATE','BHTOTL','BHREMK'], 
+                    ['BHCOMPIY','BHBHNOIY','BHBHNO','BHDATE','BHTOTL','BHREMK','BHNOTA','BHDESC'], 
                     $UnikNo );
                 DB::table('BHHEAD')->insert($FinalField);
 
@@ -232,7 +240,7 @@ class cBHHEAD extends cWeController {
             case "2":
                 $FinalField = fnGetSintaxCRUD ($UserName, $fBHHEAD, 
                     '2', "BH", 
-                    ['BHTOTL','BHREMK'], 
+                    ['BHTOTL','BHREMK','BHNOTA','BHDESC'], 
                     $UnikNo );
                 DB::table('BHHEAD')
                     ->where('BHBHNOIY','=',$fBHHEAD['BHBHNOIY'])                    

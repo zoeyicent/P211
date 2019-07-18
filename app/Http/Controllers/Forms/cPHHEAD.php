@@ -19,6 +19,7 @@ class cPHHEAD extends cWeController {
         fnCrtColGrid($this->GridObj, "act", 1, 0, '', 'ACTION', 'Action', 50);
         fnCrtColGrid($this->GridObj, "hdn", 1, 1, '', 'PHPHNOIY', 'IY', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'PHPHNO', 'No Transaksi', 100);
+        fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'PHNOTA', 'No Referensi', 100);
         fnCrtColGrid($this->GridObj, "dtp", 1, 1, '', 'PHDATE', 'Tanggal', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BPBPNO', 'Kode Plg', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BPNAME', 'Nama Plg', 100);
@@ -63,7 +64,8 @@ class cPHHEAD extends cWeController {
 
         fnCrtObjTxt($this->FormObj, 0, "FF", "3", "Panel1", "PHPHNOIY", "IY", "", false);
         fnCrtObjTxt($this->FormObj, 1, "FF", "3", "Panel1", "PHPHNO", "No Transaksi", "", false);
-        fnCrtObjDtp($this->FormObj, 1, "FF", "2", "Panel1", "PHDATE", "Tanggal Transaksi", "", true);         
+        fnCrtObjDtp($this->FormObj, 1, "FF", "2", "Panel1", "PHDATE", "Tanggal Transaksi", "", true);   
+        fnCrtObjTxt($this->FormObj, 1, "FF", "0", "Panel1", "PHNOTA", "No Referensi", "", false, "0", "30");        
         fnCrtObjRad($this->FormObj, 1, "FF", "2", "Panel1", "PHTYPE", "Tipe Transaksi", "", "T", "Radio", "CC");
         fnCrtObjPop($this->FormObj, 1, "FF", "2", "Panel1", "PHBPNOIY", "BPBPNO", "BPNAME", "Pemasuk", "", true, "MBPMAS", true, 1);
         fnCrtObjRmk($this->FormObj, 1, "FF", "0", "Panel1", "PHADDR", "Alamat", "", false, 100);
@@ -217,13 +219,17 @@ class cPHHEAD extends cWeController {
         switch ($request->Mode) {
             case "1":
                 $NO = DB::Table('PHHEAD')->max('PHPHNOIY');
-                $fPHHEAD['PHPHNO'] = 'PCH/'.substr('0000000'.($NO+1),-6);
+                // $fPHHEAD['PHPHNO'] = 'PCH/'.substr('0000000'.($NO+1),-6);
                 // $fPHHEAD['PHPHNO'] = 'SALES/000025';
+
+                $fPHHEAD['PHPHNO'] = fnTBLTRN($fPHHEAD['PHCOMPIY'], $UserName, 
+                                        "PCH-".substr($fPHHEAD['PHDATE'],0,6),
+                                        "PCH/".substr($fPHHEAD['PHDATE'],0,6)."/", 6);
 
                 $fPHHEAD['PHPHNOIY'] = fnSYSNOR('PHHEAD', $UserName);
                 $FinalField = fnGetSintaxCRUD ($UserName, $fPHHEAD, 
                     '1', "PH", 
-                    ['PHCOMPIY','PHPHNOIY','PHPHNO','PHDATE','PHTYPE','PHBPNOIY','PHADDR','PHCITY','PHTELP','PHCPER','PHSUBT','PHEXCT','PHTOTL','PHREMK'], 
+                    ['PHCOMPIY','PHPHNOIY','PHPHNO','PHDATE','PHTYPE','PHBPNOIY','PHADDR','PHCITY','PHTELP','PHCPER','PHSUBT','PHEXCT','PHTOTL','PHREMK','PHNOTA'], 
                     $UnikNo );
                 DB::table('PHHEAD')->insert($FinalField);
 
@@ -252,7 +258,7 @@ class cPHHEAD extends cWeController {
             case "2":
                 $FinalField = fnGetSintaxCRUD ($UserName, $fPHHEAD, 
                     '2', "PH", 
-                    ['PHBPNOIY','PHADDR','PHCITY','PHTELP','PHCPER','PHSUBT','PHEXCT','PHTOTL','PHREMK'], 
+                    ['PHBPNOIY','PHADDR','PHCITY','PHTELP','PHCPER','PHSUBT','PHEXCT','PHTOTL','PHREMK','PHNOTA'], 
                     $UnikNo );
                 DB::table('PHHEAD')
                     ->where('PHPHNOIY','=',$fPHHEAD['PHPHNOIY'])                    
@@ -281,10 +287,10 @@ class cPHHEAD extends cWeController {
             case "3":
                 DB::table('PHLINE')
                     ->where('PLPHNOIY','=',$fPHHEAD['PHPHNOIY'])      
-                    ->delete();
+                    ->update(array('PLDLFG'=>'1'));
                 DB::table('PHHEAD')
                     ->where('PHPHNOIY','=',$fPHHEAD['PHPHNOIY'])      
-                    ->delete();
+                    ->update(array('PHDLFG'=>'1'));
                 DB::select("call StpProsesMittraByTransaksi('".$UserName."','".$fPHHEAD['PHCOMPIY']."','PCH','".$fPHHEAD['PHPHNOIY']."','')");
                 break;
         }

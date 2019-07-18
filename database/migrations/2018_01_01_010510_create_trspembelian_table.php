@@ -17,6 +17,7 @@ class CreateTRSPEMBELIANTable extends weMigrations
             $table->integer('PHCOMPIY')->nullable(false)->comment('System Company IY');
             $table->integer('PHPHNOIY')->nullable(false)->comment('Purchase HEAD IY');
             $table->char('PHPHNO',20)->nullable(false)->comment('Transaction No');
+            $table->char('PHNOTA',50)->nullable(true)->comment('Nota No');
             $table->char('PHDATE',8)->nullable(true)->comment('Transaction Date');
             $table->char('PHTYPE',20)->nullable(true)->comment('Transaction Type');
             $table->integer('PHBPNOIY')->nullable(false)->comment('Bisnis Partner IY');

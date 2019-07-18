@@ -183,8 +183,8 @@ BEGIN
     Set vSqlStm = ConCat(vSqlStm,' , 0 As MTAVGN');
     Set vSqlStm = ConCat(vSqlStm,' , '''' As MTREMK');
     Set vSqlStm = ConCat(vSqlStm,' , @key_val := ConCat(SLITNOIY,SHDATE) As MTITRM');
-    Set vSqlStm = ConCat(vSqlStm,' , 0 As MTDPFG');
-    Set vSqlStm = ConCat(vSqlStm,' , 0 As MTDLFG');
+    Set vSqlStm = ConCat(vSqlStm,' , ''0'' As MTDPFG');
+    Set vSqlStm = ConCat(vSqlStm,' , ''0'' As MTDLFG');
     Set vSqlStm = ConCat(vSqlStm,' , SLRGDT As MTRGDT');
     Set vSqlStm = ConCat(vSqlStm,' , SLRGID As MTRGID');
     Set vSqlStm = ConCat(vSqlStm,' , SLCHDT As MTCHDT');
@@ -199,6 +199,7 @@ BEGIN
     Set vSqlStm = ConCat(vSqlStm,' , ''SLS'' As MODL, SLRGID, SLRGDT, SLCHID, SLCHDT, SLCHNO From SHLINE ');
     Set vSqlStm = ConCat(vSqlStm,' Left Join SHHEAD On SHSHNOIY = SLSHNOIY ');
     Set vSqlStm = ConCat(vSqlStm,' Where SHCOMPIY = ', pCompIY );
+    Set vSqlStm = ConCat(vSqlStm,'   And SHDLFG = ''0'' And SLDLFG = ''0'' ');
     Set vSqlStm = ConCat(vSqlStm,'   And SHDATE >= ', '''', pTglTrs, '''');
     IF pITNOIY <> 0 THEN
     Set vSqlStm = ConCat(vSqlStm,'   And SLITNOIY = ', pITNOIY );
@@ -209,6 +210,7 @@ BEGIN
     Set vSqlStm = ConCat(vSqlStm,' , ''PCH'' As MODL, PLRGID, PLRGDT, PLCHID, PLCHDT, PLCHNO From PHLINE ');
     Set vSqlStm = ConCat(vSqlStm,' Left Join PHHEAD On PHPHNOIY = PLPHNOIY ');
     Set vSqlStm = ConCat(vSqlStm,' Where PHCOMPIY = ', pCompIY );
+    Set vSqlStm = ConCat(vSqlStm,'   And PHDLFG = ''0'' And PLDLFG = ''0'' ');
     Set vSqlStm = ConCat(vSqlStm,'   And PHDATE >= ', '''', pTglTrs, '''');
     IF pITNOIY <> 0 THEN
     Set vSqlStm = ConCat(vSqlStm,'   And PLITNOIY = ', pITNOIY );
@@ -242,7 +244,8 @@ Select
 MTNOMRIY NOMRIY
 #, MTMODL, MTTRDT, MTITNOIY, MTQTYS, MTHARG, MTTOTL
 , @BEQ := IF(@KEY = MTITNOIY, @AFQ, ifNull((Select B.MTAFTQ From MITTRA B Where B.MTCOMPIY = A.MTCOMPIY ANd B.MTITNOIY = A.MTITNOIY And B.MTTMSX < A.MTTMSX Order By B.MTITNOIY, B.MTTMSX Desc limit 0,1),0) ) BEFQ
-, @AFQ := IF(@KEY = MTITNOIY, @AFQ+MTQTYS, MTBEFQ+MTQTYS) AFTQ
+#, @AFQ := IF(@KEY = MTITNOIY, @AFQ+MTQTYS, MTBEFQ+MTQTYS) AFTQ
+, @AFQ := IF(@KEY = MTITNOIY, @AFQ+MTQTYS, @BEQ+MTQTYS) AFTQ
 , @AVO := IF(@KEY = MTITNOIY, @AVN, ifNull((Select B.MTAVGN From MITTRA B Where B.MTCOMPIY = A.MTCOMPIY ANd B.MTITNOIY = A.MTITNOIY And B.MTTMSX < A.MTTMSX Order By B.MTITNOIY, B.MTTMSX Desc limit 0,1),0) ) AVGO
 , @AVN := IF(MTMODL='SLS',@AVO,IF(@BEQ+MTQTYS = 0 , 0, ((@BEQ*@AVO)+(MTTOTL)) / (@BEQ+MTQTYS)) ) AVGN
 , @KEY := MTITNOIY ITNOIY
@@ -262,7 +265,7 @@ Where  MTCOMPIY = pCompIY
 And MTNOMRIY = NOMRIY And MTDPFG = '0';
 
 UpDate MITMAS
-Left Join MITTRA On MTCOMPIY = MMCOMPIY And MTNOMRIY = (
+Inner Join MITTRA On MTCOMPIY = MMCOMPIY And MTNOMRIY = (
 Select MTNOMRIY From MITTRA Where MTCOMPIY = pCompIY And MTDPFG = '0' And MTITNOIY = MMITNOIY Order By MTITNOIY, MTTMSX Desc Limit 0, 1
 )
 Set MMQTYS = ifNull(MTAFTQ,0);
@@ -271,14 +274,15 @@ Set MMQTYS = ifNull(MTAFTQ,0);
 Select IfNull(MTAFTQ,0), MMITNO, MTTRDT 
 Into @C_QTYS, @C_BANO, @C_DATE
 From MITTRA 
-Left Join MITMAS On MMINTOIY = MTITNOIY 
+Left Join MITMAS On MMITNOIY = MTITNOIY 
 Where  MTCOMPIY = pCompIY
 And MTDPFG = '0'
 And MTAFTQ < 0
 limit 0,1;
 
 if @C_QTYS < 0 then
-    Set vPesan = ConCat('Kode Barang : ', @C_BANO, '<br>', 'Pada Tanggal : ', @C_DATE, '<br>Pergerakan Stock Qty MINUS');
+    #Set vPesan = ConCat('Kode Barang : ', @C_BANO, '<br>', 'Pada Tanggal : ', @C_DATE, '<br>Pergerakan Stock Qty MINUS');
+    Set vPesan = ConCat('Kode Barang : ', @C_BANO, ' ', 'Stock Qty MINUS Pada Tanggal : ', DATE_FORMAT(STR_TO_DATE(@C_DATE,'%Y%m%d'),'%d %M %Y'), ' ');
     SIGNAL SQLSTATE '45000'
     SET MYSQL_ERRNO = 9970, MESSAGE_TEXT = vPesan;        
 end if;
@@ -367,7 +371,8 @@ BEGIN
             SHCOMPIY T_COMPIY, SHDATE T_TRDT, SLITNOIY T_ITNOIY
             From SHHEAD 
             Left Join SHLINE On SLSHNOIY = SHSHNOIY
-            Where SHCOMPIY = pCompIY And SHSHNOIY = pTRNOIY And SHDLFG = 0 And SLDLFG = 0 ;
+            Where SHCOMPIY = pCompIY And SHSHNOIY = pTRNOIY ;
+            #And SHDLFG = 0 And SLDLFG = 0 
 
         /* Declare 'handlers' for exceptions */
         DECLARE CONTINUE HANDLER FOR NOT FOUND
@@ -398,8 +403,8 @@ BEGIN
             PHCOMPIY T_COMPIY, PHDATE T_TRDT, PLITNOIY T_ITNOIY
             From PHHEAD 
             Left Join PHLINE On PLPHNOIY = PHPHNOIY
-            Where PHCOMPIY = pCompIY And PHPHNOIY = pTRNOIY And PHDLFG = 0 And PLDLFG = 0 ;
-
+            Where PHCOMPIY = pCompIY And PHPHNOIY = pTRNOIY ;
+            #And PHDLFG = 0 And PLDLFG = 0 
         /* Declare 'handlers' for exceptions */
         DECLARE CONTINUE HANDLER FOR NOT FOUND
         SET no_more_rows = TRUE;

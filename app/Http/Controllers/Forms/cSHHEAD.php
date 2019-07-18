@@ -19,6 +19,7 @@ class cSHHEAD extends cWeController {
         fnCrtColGrid($this->GridObj, "act", 1, 0, '', 'ACTION', 'Action', 50);
         fnCrtColGrid($this->GridObj, "hdn", 1, 1, '', 'SHSHNOIY', 'IY', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'SHSHNO', 'No Transaksi', 100);
+        fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'SHNOTA', 'No Referensi', 100);
         fnCrtColGrid($this->GridObj, "dtp", 1, 1, '', 'SHDATE', 'Tanggal', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BPBPNO', 'Kode Plg', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BPNAME', 'Nama Plg', 100);
@@ -63,7 +64,8 @@ class cSHHEAD extends cWeController {
 
         fnCrtObjTxt($this->FormObj, 0, "FF", "3", "Panel1", "SHSHNOIY", "IY", "", false);
         fnCrtObjTxt($this->FormObj, 1, "FF", "3", "Panel1", "SHSHNO", "No Transaksi", "", false);
-        fnCrtObjDtp($this->FormObj, 1, "FF", "2", "Panel1", "SHDATE", "Tanggal Transaksi", "", true);         
+        fnCrtObjDtp($this->FormObj, 1, "FF", "2", "Panel1", "SHDATE", "Tanggal Transaksi", "", true);     
+        fnCrtObjTxt($this->FormObj, 1, "FF", "0", "Panel1", "SHNOTA", "No Referensi", "", false, "0", "30");       
         fnCrtObjRad($this->FormObj, 1, "FF", "2", "Panel1", "SHTYPE", "Tipe Transaksi", "", "T", "Radio", "CC");
         fnCrtObjPop($this->FormObj, 1, "FF", "2", "Panel1", "SHBPNOIY", "BPBPNO", "BPNAME", "Pelanggan", "", true, "MBPMAS", true, 1);
         fnCrtObjRmk($this->FormObj, 1, "FF", "0", "Panel1", "SHADDR", "Alamat", "", false, 100);
@@ -217,13 +219,17 @@ class cSHHEAD extends cWeController {
         switch ($request->Mode) {
             case "1":
                 $NO = DB::Table('SHHEAD')->max('SHSHNOIY');
-                $fSHHEAD['SHSHNO'] = 'SLS/'.substr('0000000'.($NO+1),-6);
+                // $fSHHEAD['SHSHNO'] = 'SLS/'.substr('0000000'.($NO+1),-6);
                 // $fSHHEAD['SHSHNO'] = 'SALES/000025';
+
+                $fSHHEAD['SHSHNO'] = fnTBLTRN($fSHHEAD['SHCOMPIY'], $UserName, 
+                                        "SLS-".substr($fSHHEAD['SHDATE'],0,6),
+                                        "SLS/".substr($fSHHEAD['SHDATE'],0,6)."/", 6);
 
                 $fSHHEAD['SHSHNOIY'] = fnSYSNOR('SHHEAD', $UserName);
                 $FinalField = fnGetSintaxCRUD ($UserName, $fSHHEAD, 
                     '1', "SH", 
-                    ['SHCOMPIY','SHSHNOIY','SHSHNO','SHDATE','SHTYPE','SHBPNOIY','SHADDR','SHCITY','SHTELP','SHCPER','SHSUBT','SHEXCT','SHTOTL','SHREMK'], 
+                    ['SHCOMPIY','SHSHNOIY','SHSHNO','SHDATE','SHTYPE','SHBPNOIY','SHADDR','SHCITY','SHTELP','SHCPER','SHSUBT','SHEXCT','SHTOTL','SHREMK','SHNOTA'], 
                     $UnikNo );
                 DB::table('SHHEAD')->insert($FinalField);
 
@@ -251,7 +257,7 @@ class cSHHEAD extends cWeController {
             case "2":
                 $FinalField = fnGetSintaxCRUD ($UserName, $fSHHEAD, 
                     '2', "SH", 
-                    ['SHBPNOIY','SHADDR','SHCITY','SHTELP','SHCPER','SHSUBT','SHEXCT','SHTOTL','SHREMK'], 
+                    ['SHBPNOIY','SHADDR','SHCITY','SHTELP','SHCPER','SHSUBT','SHEXCT','SHTOTL','SHREMK','SHNOTA'], 
                     $UnikNo );
                 DB::table('SHHEAD')
                     ->where('SHSHNOIY','=',$fSHHEAD['SHSHNOIY'])                    
@@ -280,10 +286,10 @@ class cSHHEAD extends cWeController {
             case "3":
                 DB::table('SHLINE')
                     ->where('SLSHNOIY','=',$fSHHEAD['SHSHNOIY'])      
-                    ->delete();
+                    ->update(array('SLDLFG'=>'1'));
                 DB::table('SHHEAD')
                     ->where('SHSHNOIY','=',$fSHHEAD['SHSHNOIY'])      
-                    ->delete();
+                    ->update(array('SHDLFG'=>'1'));
                 DB::select("call StpProsesMittraByTransaksi('".$UserName."','".$fSHHEAD['SHCOMPIY']."','SLS','".$fSHHEAD['SHSHNOIY']."','')");
                 break;
         }

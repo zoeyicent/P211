@@ -18,6 +18,7 @@ class cINF_SHHEAD extends cWeController {
         fnCrtColGrid($this->GridObj, "act", 1, 0, '', 'ACTION', 'Action', 50);
         fnCrtColGrid($this->GridObj, "hdn", 1, 1, '', 'SLSLNOIY', 'IY', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'SHSHNO', 'No Transaksi', 100);
+        fnCrtColGrid($this->GridObj, "txt", 0, 0, '', 'SHNOTA', 'No Referensi', 100);
         fnCrtColGrid($this->GridObj, "dtp", 1, 1, '001', 'SHDATE', 'Tanggal', 100);
         fnCrtColGrid($this->GridObj, "txt", 0, 0, '', 'BPBPNO', 'Kode Pelanggan', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'BPNAME', 'Nama Pelanggan', 100);
