@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome'); //ada disini --> resources\views\welcome.blade.php
 });
+
+
+Route::get('/PrintForm', function () {
+	// echo $id;
+        $a = storage_path('app/public/abc.pdf');
+// dd($a);
+
+        // $headers = ['Content-Type' => 'application/pdf'];
+        // return response()->file($a,$headers);
+
+});
+

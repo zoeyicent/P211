@@ -252,17 +252,17 @@
         // dd($TableModel);
 
         // dd($Request->perPage);
-        if($Request->perPage != "0") {
-            // $page = $Request->page;
-            // $perPage = $Request->perPage;
-            // $offset = ($page * $perPage) - $perPage;
-            // return $TableModel->offset($offset)->limit($perPage)->get();
-            return $TableModel->paginate($Request->perPage);
-        } else {
-            // dd("masuk else");
-            return $TableModel->paginate($TableModel->count());
-            // return $TableModel->get();
-        }
+        // dd($TableModel->count());
+        if (!is_null($Request->perPage)) {
+            if($Request->perPage != "0") {
+                // $page = $Request->page;
+                // $perPage = $Request->perPage;
+                // $offset = ($page * $perPage) - $perPage;
+                // return $TableModel->offset($offset)->limit($perPage)->get();
+                return $TableModel->paginate($Request->perPage);
+            }
+        }        
+        return $TableModel->paginate($TableModel->count());
         
 
     }     
@@ -929,3 +929,175 @@
 
 
 
+
+
+/*======================================================================================================================*/
+/*======BEGIN REPORTING=================================================================================================*/
+/*======================================================================================================================*/
+
+    function fnFormatNumber($nilai, $dec, $n = ".", $d = ",") {
+        return number_format($nilai, $dec, $n, $d);
+    }
+
+    function fnFormatTanggal($nilai, $format) {
+        // $date = new DateTime('2000-01-01');
+        // echo $date->format('Y-m-d H:i:s');
+        $t = str_split($nilai,2);
+        $tanggal = new DateTime($t[0].$t[1]."-".$t[2]."-".$t[3]);
+        $value = "";
+        switch (strtoupper($format)) {
+            case "DDMMMYYYY":
+                $value = $tanggal->format('d-M-Y');
+                break;
+            case "DDMMMMYYYY":
+                $value = $tanggal->format('d-F-Y');
+                break;
+            default:
+                $value = $tanggal->format('d-F-Y');
+                break;
+        }        
+        return $value;
+    }
+
+    function fnStringEnter($nilai, $charLength) {
+        $b = $nilai;
+        if ($charLength!=0) {
+            $a = str_split($nilai,$charLength);
+            // $b .= "-".count($a);
+            if(count($a)!=0) {
+                $b = implode("\n",$a);
+            }
+        }
+        return $b;
+    }
+
+    function fnReportDoDetail($pdf, $rows, $columns, $rowHeight, $rowWrapText) {
+
+        $line = 0;
+        if($rowWrapText==true) { // Begin Cari Jumlah Baris Enter
+            foreach($columns as $col) {  // Begin Looping Columns
+                $nilai = fnStringEnter($rows[$col['field']], $col['charLength']);
+                if (is_string($nilai)) {
+                    $nilai = fnStringEnter(rtrim($rows[$col['field']]), $col['charLength']);
+                    $lineEnter = count(explode("\n", $nilai))-1;
+                    $line = ($lineEnter > $line ? $lineEnter : $line);
+                }
+            } // End Looping Columns
+        } // End Cari Jumlah Baris Enter
+        $lineEnter = 0;
+Atas:
+        $colStart = 0;
+        $colEnd = count($columns)-1;
+        foreach($columns as $col) {  // Begin Looping Columns
+
+            $value = "";
+            switch (strtoupper($col['type'])) {
+                case "TXT":
+                    if($rowWrapText==true) {
+                        $value = fnStringEnter(rtrim($rows[$col['field']]), $col['charLength']);
+                    } else {
+                        $value = rtrim($rows[$col['field']]);
+                    } 
+                    // $value .= count($columns);
+                    // $value .= $columns[0]['field'];
+                    // $value .= $line;
+                    break;
+                case "NUM":
+                    $value = fnFormatNumber($rows[$col['field']], 0, '.', ',');
+                    if(isset($col['decimal'])) {
+                        $value = fnFormatNumber($rows[$col['field']], $col['decimal'], '.', ',');
+                    }   
+                    break;
+                case "DTP":
+                    $value = rtrim($rows[$col['field']]);
+                    $format = ( isset($col['format']) === true ? $col['format'] : '' );
+                    $value = fnFormatTanggal($value, $format);
+                    break;
+                default:
+                    $value = $rows[$col['field']];
+                    break;
+            }
+            
+            $border = ($colStart === 0 ? 'LB' : $colStart === $colEnd ? 'LRB' : 'LB');
+            if ($line != 0) {
+                $border = str_replace("B","",$border);
+            }
+            if ($lineEnter!=0) {
+                $v = $value;
+                $value = "";
+                if (strtoupper($col['type'])=="TXT") {
+                    $vArr = explode("\n", $v);
+                    $vArrTotal = count($vArr);
+                    // $value = (count($vArr)-1)." - ".$lineEnter." - ".$vArrTotal." , ";
+                    if (($vArrTotal!=1) && ($vArrTotal >= $lineEnter)) {
+                        $value = $vArr[$lineEnter];
+                    }
+                }
+            } else {                
+                $vArr = explode("\n", $value);
+                $value = $vArr[0];
+            }
+
+
+            $pdf->Cell($col['length'], 
+                       $rowHeight, 
+                       $value , 
+                       $border, 
+                       0, 
+                       $col['align']);
+
+            $colStart++;
+        } // End Looping Columns
+        $pdf->ln();
+
+        if ($line!=0) {
+            $line--; $lineEnter++;
+            goto Atas;
+        }
+        // $pdf->Cell(50, 25, 'End Do Detail!',0,0,'C');
+        // $pdf->Cell(50, 25, 'Tambahan!','LTBR',1,'C');
+    }
+
+
+
+    function fnReportDoHeader($pdf, $columns, $rowHeight) {
+
+        $line = 0;
+        foreach($columns as $col) {  // Begin Looping Columns
+            $nilai = $col['label'];
+            if (is_string($nilai)) {
+                $nilai = rtrim($nilai);
+                $lineEnter = count(explode("\n", $nilai))-1;
+                $line = ($lineEnter > $line ? $lineEnter : $line);
+            }
+        } // End Looping Columns
+
+        $lineEnter = 0;
+Atas:        
+        foreach($columns as $col) {  // Begin Looping Columns
+            $nilai = explode("\n", $col['label']);
+            $value = isset($nilai[$lineEnter]) === true ? $nilai[$lineEnter] : '';
+
+            $border = 'LR';
+            if ($line == 0) { $border .= 'B'; }
+            if ($lineEnter == 0) { $border .= 'T'; }
+            
+            $pdf->Cell($col['length'], 
+                       $rowHeight, 
+                       $value, 
+                       $border, 
+                       0, 
+                       'C');
+
+        } // End Looping Columns
+        $pdf->ln();
+
+        if ($line!=0) {
+            $line--; $lineEnter++;
+            goto Atas;
+        }
+    }
+
+/*======================================================================================================================*/
+/*======END REPORTING===================================================================================================*/
+/*======================================================================================================================*/

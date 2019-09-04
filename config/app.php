@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\WilEdiHelperServiceProvider::class,  // ini buatan sendiri......
+        // Codedge\Fpdf\FpdfServiceProvider::class, // [1]
 
     ],
 
@@ -228,6 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        // 'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class, // [2]
 
     ],
 

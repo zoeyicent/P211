@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PHHEAD;
 use App\Models\PHLINE;
 use DB;
+use Codedge\Fpdf\Facades\Fpdf;
 
 class cPHHEAD extends cWeController {
 
@@ -298,5 +299,18 @@ class cPHHEAD extends cWeController {
 
     }
 
+    public function PrintForm(Request $request) {    
+        
+        $pathFile = storage_path(). '/recipe.pdf';
+        Fpdf::AddPage();
+        Fpdf::SetFont('Courier', 'B', 18);
+        Fpdf::Cell(50, 25, 'Hello World!');
+        // Fpdf::Output();
+        Fpdf::Output('F', $pathFile);
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->file($pathFile, $headers);
+
+
+    }   
 
 }

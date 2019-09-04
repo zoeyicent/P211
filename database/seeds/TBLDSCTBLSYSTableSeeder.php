@@ -217,6 +217,17 @@ class TBLDSCTBLSYSTableSeeder extends Seeder
         foreach ($defaultFieldTBLSYS as $K => $D) { $TBLSYS[$K] = $D; }
         $TBLSYS->save();
 
+        $TBLSYS = new TBLSYS();
+        $TBLSYS->TSDSCDIY = ($iDSC-1);
+        $TBLSYS->TSSYCDIY = $iSYS++;
+        $TBLSYS->TSSYCD = 'P';
+        $TBLSYS->TSSYNM = 'Print';
+        $TBLSYS->TSSYV1 = '0'; $TBLSYS->TSSYV2 = '0'; $TBLSYS->TSSYV3 = '0';
+        $TBLSYS->TSSYT1 = ''; $TBLSYS->TSSYT2 = ''; $TBLSYS->TSSYT3 = '';
+        $TBLSYS->TSLSV1 = ''; $TBLSYS->TSLSV2 = ''; $TBLSYS->TSLSV3 = '';
+        $TBLSYS->TSLST1 = ''; $TBLSYS->TSLST2 = ''; $TBLSYS->TSLST3 = '';
+        foreach ($defaultFieldTBLSYS as $K => $D) { $TBLSYS[$K] = $D; }
+        $TBLSYS->save();
 /*--------------------------------------------------------------*/
 
         $RunNoDSC = new TBLNOR();

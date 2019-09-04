@@ -22,7 +22,11 @@ Route::get('login', 'Forms\cAUTH@Login');
 Route::middleware(['weToken'])->group(function () {
 	Route::get('getData', 'cWeRouter@Panggil');
 	Route::post('postData', 'cWeRouter@Kirim');
+	// Route::get('printData', 'cWeRouter@Cetak');
 });
+
+Route::get('printData', 'cWeRouter@Cetak');
+
 
 /*
 ================================================================================================================
@@ -31,6 +35,11 @@ Route Yang Di Bawah Untuk Testing...
 */
 
 Route::get('DataDummy', 'Forms\cDUMMYDATA@Coba');
+// Route::get('PrintForm', 'Forms\cPHHEAD@PrintForm');
+Route::get('PrintFormPO', 'Reports\crPHHEAD@PrintForm');
+Route::get('PrintFormSO', 'Reports\crSHHEAD@PrintForm');
+
+Route::get('PrintFormPO1', 'Reports\crPHHEAD@PrintABC');
 
 Route::get('TestControllerAwal', 'Forms\cTES123@Awal');
 Route::get('TestControllerAkhir', 'Forms\cTBLDSC@LoadGrid');

@@ -120,19 +120,19 @@ class SYSMNUTableSeeder extends Seeder
         $SYSMNU->save();
 
         $SYSMNU = new SYSMNU();
-        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1110'; $SYSMNU->SMSCUT = 'CST010'; $SYSMNU->SMACES = 'VAEDXL';
+        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1110'; $SYSMNU->SMSCUT = 'CST010'; $SYSMNU->SMACES = 'VAEDXLP';
         $SYSMNU->SMURLW = 'BHHEAD'; $SYSMNU->SMMENU = 'BIAYA'; $SYSMNU->SMGRUP = ''; $SYSMNU->SMDESC = ''; $SYSMNU->SMREMK = '';
         foreach ($defaultFieldSYSMNU as $K => $D) { $SYSMNU[$K] = $D; }
         $SYSMNU->save();    
 
         $SYSMNU = new SYSMNU();
-        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1120'; $SYSMNU->SMSCUT = 'PCH010'; $SYSMNU->SMACES = 'VAEDXL';
+        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1120'; $SYSMNU->SMSCUT = 'PCH010'; $SYSMNU->SMACES = 'VAEDXLP';
         $SYSMNU->SMURLW = 'PHHEAD'; $SYSMNU->SMMENU = 'PEMBELIAN'; $SYSMNU->SMGRUP = ''; $SYSMNU->SMDESC = ''; $SYSMNU->SMREMK = '';
         foreach ($defaultFieldSYSMNU as $K => $D) { $SYSMNU[$K] = $D; }
         $SYSMNU->save();  
 
         $SYSMNU = new SYSMNU();
-        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1130'; $SYSMNU->SMSCUT = 'SLS010'; $SYSMNU->SMACES = 'VAEDXL';
+        $SYSMNU->SMMENUIY = $i++; $SYSMNU->SMNOMR = '1130'; $SYSMNU->SMSCUT = 'SLS010'; $SYSMNU->SMACES = 'VAEDXLP';
         $SYSMNU->SMURLW = 'SHHEAD'; $SYSMNU->SMMENU = 'PENJUALAN'; $SYSMNU->SMGRUP = ''; $SYSMNU->SMDESC = ''; $SYSMNU->SMREMK = '';
         foreach ($defaultFieldSYSMNU as $K => $D) { $SYSMNU[$K] = $D; }
         $SYSMNU->save();  
