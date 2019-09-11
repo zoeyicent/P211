@@ -22,6 +22,7 @@ class cINF_MITTRA extends cWeController {
         fnCrtColGrid($this->GridObj, "num", 1, 1, '', 'MTLNNO', 'No Baris', 100);
         fnCrtColGrid($this->GridObj, "txt", 1, 1, '', 'MMITNO', 'Kode Barang', 100);
         fnCrtColGrid($this->GridObj, "txt", 0, 0, '', 'MMDESC', 'Nama Barang', 100);
+        fnCrtColGrid($this->GridObj, "txt", 0, 0, '', 'MTMODL', 'Module', 100);
         fnCrtColGrid($this->GridObj, "num", 1, 1, '', 'MTBEFQ', 'Qty Awal', 100, "", 2);
         fnCrtColGrid($this->GridObj, "num", 0, 0, '', 'MTQTYS', 'Qty', 100, "", 2);
         fnCrtColGrid($this->GridObj, "num", 0, 0, '', 'MTHARG', 'Harga', 100, "", 2);
