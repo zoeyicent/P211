@@ -348,6 +348,7 @@
                                     "Step" => $Step,
                                     "Prefix" => $Prefix,  
                                     "Suffix" => $Suffix,
+                                    "ValueNum" => 0,
                                     "MinValue" => $MinValue, 
                                     "MaxValue" => $MaxValue,) );
     } 
